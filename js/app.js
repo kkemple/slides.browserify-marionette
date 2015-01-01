@@ -10943,7 +10943,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.json */\n\ngrunt.initConfig({\n    browserify: {\n        transform: [\"hbsfy\"],\n        options: {\n            debug: true\n        }\n    },\n...\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.json */\n\ngrunt.initConfig({\n    browserify: {\n        app: {\n            files: {\n                'dist/js/app.js': ['js/**/*.js']\n            },\n            options: {\n                transform: [\"hbsfy\"],\n                browserifyOptions: {\n                    debug: true\n                }\n            }\n        }\n    },\n...\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
 },{"hbsfy/runtime":25}],147:[function(require,module,exports){
