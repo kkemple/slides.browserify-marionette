@@ -11040,14 +11040,14 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/config/templates/index.js */\n\nmodule.exports.entry = require('...');\nmodule.exports.gettingSetUp = require('...');\nmodule.exports.gettingSetUpConsole = require('...');\nmodule.exports.gettingSetUpGrunt = require('...');\n\n/* usage */\n\nvar templates = require('./config/templates');\nvar html = templates.gettingSetUpGrunt(data);\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/config/templates/index.js */\n\nmodule.exports.entry = require('...');\nmodule.exports.gettingSetUp = require('...');\nmodule.exports.gettingSetUpConsole = require('...');\nmodule.exports.gettingSetUpGrunt = require('...');\n\n\n/* usage */\n\nvar templates = require('./config/templates');\nvar html = templates.gettingSetUpGrunt(data);\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
 },{"hbsfy/runtime":25}],159:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h1>Transforming Templates</h1>";
+  return "<h1>Pre-compiling Templates</h1>";
   },"useData":true});
 
 },{"hbsfy/runtime":25}],160:[function(require,module,exports){
