@@ -321,7 +321,7 @@ ScreenEvent = Backbone.Model.extend({
             this.set('endX', 0, { silent: true });
             return;
         }
-        action = (startX > endX) ? 'stepBackward' : 'stepForward';
+        action = (startX < endX) ? 'stepBackward' : 'stepForward';
         vent.trigger('slides:step', action);
     }
 });
@@ -453,10 +453,11 @@ Slide = Marionette.ItemView.extend({
     /**
      * Set up event handlers for when we get mouse action
      */
-    events: function() {
-        return (/mobile/.test(navigator.userAgent)) ?
-            { 'touchstart': 'start', 'touchend': 'stop' } :
-            { 'mousedown': 'start', 'mouseup': 'stop' };
+    events: {
+        'touchstart': 'start',
+        'touchend': 'stop',
+        'mousedown': 'start',
+        'mouseup': 'stop'
     },
 
     /**
@@ -508,11 +509,17 @@ Slide = Marionette.ItemView.extend({
     },
 
     start: function(e) {
-        this.screenEvent.set('startX', e.pageX);
+        var pageX = (e.type === 'touchstart') ?
+                e.originalEvent.changedTouches[0].pageX :
+                e.pageX;
+        this.screenEvent.set('startX', pageX);
     },
 
     stop: function(e) {
-        this.screenEvent.set('endX', e.pageX);
+        var pageY = (e.type === 'touchend') ?
+                e.originalEvent.changedTouches[0].pageY :
+                e.pageY;
+        this.screenEvent.set('endX', pageY);
     }
 });
 
