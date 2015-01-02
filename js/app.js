@@ -298,6 +298,7 @@ app.start();
 'use strict';
 
 var Backbone = require('../libs/backbone'),
+    _ = require('../libs/underscore'),
     vent = require('../config/events'),
     ScreenEvent;
 
@@ -308,7 +309,7 @@ ScreenEvent = Backbone.Model.extend({
         direction: ''
     },
     initialize: function() {
-        this.listenTo(this, 'change:endX', this.processInteraction);
+        this.listenTo(this, 'change:endX', _.throttle(this.processInteraction, 300));
     },
     processInteraction: function() {
         var action, startX, endX;
@@ -328,7 +329,7 @@ ScreenEvent = Backbone.Model.extend({
 
 module.exports = ScreenEvent;
 
-},{"../config/events":3,"../libs/backbone":8}],14:[function(require,module,exports){
+},{"../config/events":3,"../libs/backbone":8,"../libs/underscore":11}],14:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('../libs/backbone'),
@@ -509,17 +510,17 @@ Slide = Marionette.ItemView.extend({
     },
 
     start: function(e) {
-        var pageX = (e.type === 'touchstart') ?
-                e.originalEvent.changedTouches[0].pageX :
-                e.pageX;
-        this.screenEvent.set('startX', pageX);
+        var screenX = (e.type === 'touchstart') ?
+                e.originalEvent.changedTouches[0].screenX :
+                e.screenX;
+        this.screenEvent.set('startX', screenX);
     },
 
     stop: function(e) {
-        var pageY = (e.type === 'touchend') ?
-                e.originalEvent.changedTouches[0].pageY :
-                e.pageY;
-        this.screenEvent.set('endX', pageY);
+        var screenX = (e.type === 'touchend') ?
+                e.originalEvent.changedTouches[0].screenX :
+                e.screenX;
+        this.screenEvent.set('endX', screenX);
     }
 });
 
