@@ -2,10 +2,7 @@
 'use strict';
 
 var Marionette = require('./libs/marionette'),
-    Backbone = require('./libs/backbone'),
-    vent = require('./config/events'),
     app;
-
 
 // Create the application instance
 app = new Marionette.Application({
@@ -14,22 +11,9 @@ app = new Marionette.Application({
     }
 });
 
-// Create the main router for the application
-app.router = new Backbone.Router();
-
-// add a listener for the `app:setTitle` event
-vent.on('app:setTitle', function(title) {
-    document.title = title;
-});
-
-// add a listener for the `app:navigate` event
-vent.on('app:navigate', function(path, trigger) {
-    app.router.navigate(path, { trigger: (trigger || false) });
-});
-
 module.exports = app;
 
-},{"./config/events":3,"./libs/backbone":8,"./libs/marionette":10}],2:[function(require,module,exports){
+},{"./libs/marionette":9}],2:[function(require,module,exports){
 'use strict';
 
 var Slide = require('../models/slide'),
@@ -124,7 +108,7 @@ Slides = Backbone.Collection.extend({
 
 module.exports = Slides;
 
-},{"../config/events":3,"../libs/backbone":8,"../models/slide":14}],3:[function(require,module,exports){
+},{"../config/events":3,"../libs/backbone":7,"../models/slide":13}],3:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('../libs/backbone'),
@@ -139,22 +123,7 @@ eventBus = new Backbone.Wreqr.EventAggregator();
 
 module.exports = eventBus;
 
-},{"../libs/backbone":8}],4:[function(require,module,exports){
-'use strict';
-
-var Backbone = require('../libs/backbone'),
-    reqres;
-/**
- * Create the event bus the application will depend on
- *
- * We don't want to use the App.vent bus
- * because we don't want to pass the app around all willy nilly
- */
-reqres = new Backbone.Wreqr.RequestResponse();
-
-module.exports = reqres;
-
-},{"../libs/backbone":8}],5:[function(require,module,exports){
+},{"../libs/backbone":7}],4:[function(require,module,exports){
 'use strict';
 
 /**
@@ -183,8 +152,10 @@ module.exports = [
     { id: 'marionetteWorkingWithTemplates', title: 'Browserify + Marionette - Making Templates Faster + Easier', titleSlide: true },
     { id: 'marionetteTemplates1', title: 'Browserify + Marionette - Pre-compiling Templates - 1' },
     { id: 'marionetteTemplates2', title: 'Browserify + Marionette - Pre-compiling Templates - 2' },
+    { id: 'marionetteModulesTitle', title: 'Browserify + Marionette - What About Modules ?', titleSlide: true },
+    { id: 'marionetteModules1', title: 'Browserify + Marionette - Extending Modules' }
 ];
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports.code = require('../../../partials/slides/code.hbs');
 module.exports.entry = require('../../../partials/slides/entry.hbs');
 module.exports.gettingSetUp = require('../../../partials/slides/gettingSetUp.hbs');
@@ -200,6 +171,8 @@ module.exports.marionetteAppStart = require('../../../partials/slides/marionette
 module.exports.marionetteConfigInit = require('../../../partials/slides/marionetteConfigInit.hbs');
 module.exports.marionetteKeepThingsSmall = require('../../../partials/slides/marionetteKeepThingsSmall.hbs');
 module.exports.marionetteKeepThingsSmallTitle = require('../../../partials/slides/marionetteKeepThingsSmallTitle.hbs');
+module.exports.marionetteModules1 = require('../../../partials/slides/marionetteModules1.hbs');
+module.exports.marionetteModulesTitle = require('../../../partials/slides/marionetteModulesTitle.hbs');
 module.exports.marionetteTemplates1 = require('../../../partials/slides/marionetteTemplates1.hbs');
 module.exports.marionetteTemplates2 = require('../../../partials/slides/marionetteTemplates2.hbs');
 module.exports.marionetteWorkingWithTemplates = require('../../../partials/slides/marionetteWorkingWithTemplates.hbs');
@@ -208,19 +181,18 @@ module.exports.whyUseBuildIntegration = require('../../../partials/slides/whyUse
 module.exports.whyUseCommonJS = require('../../../partials/slides/whyUseCommonJS.hbs');
 module.exports.whyUseNpmModules = require('../../../partials/slides/whyUseNpmModules.hbs');
 
-},{"../../../partials/slides/code.hbs":143,"../../../partials/slides/entry.hbs":144,"../../../partials/slides/gettingSetUp.hbs":145,"../../../partials/slides/gettingSetUpConsole.hbs":146,"../../../partials/slides/gettingSetUpGrunt.hbs":147,"../../../partials/slides/gettingSetUpNonNpmDeps.hbs":148,"../../../partials/slides/gettingSetUpPackageJson.hbs":149,"../../../partials/slides/gettingSetUpShimmingGlobals.hbs":150,"../../../partials/slides/gettingSetUpUnderstandingTransforms.hbs":151,"../../../partials/slides/marionette.hbs":152,"../../../partials/slides/marionetteAppConfig.hbs":153,"../../../partials/slides/marionetteAppStart.hbs":154,"../../../partials/slides/marionetteConfigInit.hbs":155,"../../../partials/slides/marionetteKeepThingsSmall.hbs":156,"../../../partials/slides/marionetteKeepThingsSmallTitle.hbs":157,"../../../partials/slides/marionetteTemplates1.hbs":158,"../../../partials/slides/marionetteTemplates2.hbs":159,"../../../partials/slides/marionetteWorkingWithTemplates.hbs":160,"../../../partials/slides/whyUse.hbs":161,"../../../partials/slides/whyUseBuildIntegration.hbs":162,"../../../partials/slides/whyUseCommonJS.hbs":163,"../../../partials/slides/whyUseNpmModules.hbs":164}],7:[function(require,module,exports){
+},{"../../../partials/slides/code.hbs":142,"../../../partials/slides/entry.hbs":143,"../../../partials/slides/gettingSetUp.hbs":144,"../../../partials/slides/gettingSetUpConsole.hbs":145,"../../../partials/slides/gettingSetUpGrunt.hbs":146,"../../../partials/slides/gettingSetUpNonNpmDeps.hbs":147,"../../../partials/slides/gettingSetUpPackageJson.hbs":148,"../../../partials/slides/gettingSetUpShimmingGlobals.hbs":149,"../../../partials/slides/gettingSetUpUnderstandingTransforms.hbs":150,"../../../partials/slides/marionette.hbs":151,"../../../partials/slides/marionetteAppConfig.hbs":152,"../../../partials/slides/marionetteAppStart.hbs":153,"../../../partials/slides/marionetteConfigInit.hbs":154,"../../../partials/slides/marionetteKeepThingsSmall.hbs":155,"../../../partials/slides/marionetteKeepThingsSmallTitle.hbs":156,"../../../partials/slides/marionetteModules1.hbs":157,"../../../partials/slides/marionetteModulesTitle.hbs":158,"../../../partials/slides/marionetteTemplates1.hbs":159,"../../../partials/slides/marionetteTemplates2.hbs":160,"../../../partials/slides/marionetteWorkingWithTemplates.hbs":161,"../../../partials/slides/whyUse.hbs":162,"../../../partials/slides/whyUseBuildIntegration.hbs":163,"../../../partials/slides/whyUseCommonJS.hbs":164,"../../../partials/slides/whyUseNpmModules.hbs":165}],6:[function(require,module,exports){
 'use strict';
 
 var Marionette = require('../libs/marionette'),
-    reqres = require('../config/reqres'),
     PresentationController;
 
 /**
  * Simple controller for our presentation router
  */
-PresentationController = Marionette.Object.extend({
-    initialize: function() {
-        this.slides = reqres.request('slides');
+PresentationController = Marionette.Controller.extend({
+    initialize: function(options) {
+        this.slides = options.slides;
     },
     stepTo: function(id) {
         this.slides.stepTo(parseInt(id, 10));
@@ -229,72 +201,47 @@ PresentationController = Marionette.Object.extend({
 
 module.exports = PresentationController;
 
-},{"../config/reqres":4,"../libs/marionette":10}],8:[function(require,module,exports){
+},{"../libs/marionette":9}],7:[function(require,module,exports){
 module.exports = Backbone;
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = jQuery;
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = Backbone.Marionette;
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = _;
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var app = require('./app'),
-    Slides = require('./collections/slides'),
-    slidesConfig = require('./config/slides'),
-    Presentation = require('./views/presentation'),
-    $ = require('./libs/jquery'),
-    reqres = require('./config/reqres'),
+    Backbone = require('./libs/backbone'),
     vent = require('./config/events'),
-    slides,
-    presentation;
+    PresentationModule = require('./modules/presentation');
 
-if (!slidesConfig.length) throw new Error('At least one slide is required!');
-
-slides = new Slides(slidesConfig);
-presentation = new Presentation({ collection: slides });
-
-// Make slides available to rest of app
-reqres.setHandler('slides', function() {
-    return slides;
+// add a listener for the `app:screen` event
+vent.on('app:screen', function(view) {
+    app.mainRegion.show(view);
 });
 
-// Once the app is started show the presentation
-app.addInitializer(function() {
-    app.mainRegion.show(presentation);
+// add a listener for the `app:setTitle` event
+vent.on('app:setTitle', function(title) {
+    document.title = title;
 });
 
-// listen for slides:step events
-vent.on('slides:step', function(action) { slides[action](); });
-
-// Catch all keyup events
-$(document).on('keyup', function(e) {
-
-    switch (e.which) {
-
-        // For left and up, step backward
-        case 37:
-        case 38:
-            slides.stepBackward();
-            e.preventDefault();
-            break;
-
-        // For right and down, step forward
-        case 39:
-        case 40:
-            slides.stepForward();
-            e.preventDefault();
-            break;
-        default:
-            break;
-    }
+// add a listener for the `app:navigate` event
+vent.on('app:navigate', function(path, trigger) {
+    Backbone.history.navigate(path, { trigger: (trigger || false) });
 });
+
+// add all modules
+app.module('presenation', PresentationModule);
 
 // Finally, start the app
 app.start();
 
-},{"./app":1,"./collections/slides":2,"./config/events":3,"./config/reqres":4,"./config/slides":5,"./libs/jquery":9,"./views/presentation":17}],13:[function(require,module,exports){
+// start the history
+Backbone.history.start();
+
+},{"./app":1,"./config/events":3,"./libs/backbone":7,"./modules/presentation":14}],12:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('../libs/backbone'),
@@ -302,15 +249,28 @@ var Backbone = require('../libs/backbone'),
     vent = require('../config/events'),
     ScreenEvent;
 
+/**
+ * Used to help manage touch/drag events
+ */
 ScreenEvent = Backbone.Model.extend({
     defaults: {
         startX: 0,
-        endX: 0,
-        direction: ''
+        endX: 0
     },
+
+    /**
+     * Listen to the endX prop for changes,
+     * process the full interaction
+     */
     initialize: function() {
         this.listenTo(this, 'change:endX', _.throttle(this.processInteraction, 300));
     },
+
+    /**
+     * Responsible for determining if the interaction was
+     * significant enough to respond to, if so fire presentation
+     * level step event
+     */
     processInteraction: function() {
         var action, startX, endX;
 
@@ -323,13 +283,13 @@ ScreenEvent = Backbone.Model.extend({
             return;
         }
         action = (startX < endX) ? 'stepBackward' : 'stepForward';
-        vent.trigger('slides:step', action);
+        vent.trigger('presentation:step', action);
     }
 });
 
 module.exports = ScreenEvent;
 
-},{"../config/events":3,"../libs/backbone":8,"../libs/underscore":11}],14:[function(require,module,exports){
+},{"../config/events":3,"../libs/backbone":7,"../libs/underscore":10}],13:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('../libs/backbone'),
@@ -378,37 +338,153 @@ Slide = Backbone.Model.extend({
 
 module.exports = Slide;
 
-},{"../../partials/slide.hbs":142,"../libs/backbone":8}],15:[function(require,module,exports){
-var app = require('../app'),
+},{"../../partials/slide.hbs":141,"../libs/backbone":7}],14:[function(require,module,exports){
+var Marionette = require('../libs/marionette'),
     Backbone = require('../libs/backbone'),
-    PresentationRouter = require('./presentation');
+    $ = require('../libs/jquery'),
+    PresentationRouter = require('../routes/presentation'),
+    PresentationController = require('../controllers/presentation'),
+    Slides = require('../collections/slides'),
+    slidesConfig = require('../config/slides'),
+    PresentationView = require('../views/presentation'),
+    vent = require('../config/events'),
+    PresentationModule;
 
-app.addInitializer(function() {
-    new PresentationRouter();
 
-    Backbone.history.start({ root: '/dist/index.html' });
+/**
+ * The main (only) module for this application,
+ * modules are responsible for building up / breaking down
+ * the functionality / data needed for this module to run properly
+ *
+ * Each module has its own router and controller and it is responsible
+ * for providing each piece of functionality with the proper options/data
+ *
+ * This will also make it easy to break down code that is no longer needed
+ * when the module is not needed
+ */
+PresentationModule = Marionette.Module.extend({
 
-    if (Backbone.history.fragment === '') {
-        app.router.navigate('slides/1');
+    // make sure the module does not start on app initialization
+    startWithParent: false,
+
+    // flag to tell if module is started
+    _started: false,
+
+    /**
+     * Gather all the collection/routers/controllers for the module,
+     * listen for any route changes
+     */
+    initialize: function() {
+        this.slides = new Slides(slidesConfig);
+        this.controller = new PresentationController({ slides: this.slides });
+        this.router = new PresentationRouter({ controller: this.controller });
+        this.listenTo(Backbone.history, 'route', this._onRoute);
+    },
+
+    /**
+     * Set our flag so we know we the module is started,
+     * If we have any view handling, handle it here
+     *
+     * Set up all listeners, trigger any events we need to fire
+     */
+    onStart: function() {
+        this._started = !this._started;
+        this.view = new PresentationView({ collection: this.slides });
+        vent.on('presentation:step', this._onStepEvent.bind(this));
+        vent.trigger('app:screen', this.view);
+
+        $(document).on('keyup', this._onKeyboardEvent.bind(this));
+    },
+
+    /**
+     * Set our flag so we know we the module is stopped,
+     * If we have any views active, destroy them
+     *
+     * Remove any event listeners, trigger any events we need to fire
+     */
+    onStop: function() {
+        this._started = !this._started;
+        this.view.destroy();
+        vent.off('presentation:step');
+
+        $(document).off('keyup', this._onKeyboardEvent.bind(this));
+    },
+
+    /**
+     * Our module is concerned with the 'presentation:step' event
+     * this is our handler for that event
+     */
+    _onStepEvent: function(action) {
+        this.slides[action]();
+    },
+
+    /**
+     * The handler for any backbone route change,
+     * we want to know if our router is concerned with the route,
+     * if we are, start the module, if we are not, stop the module
+     */
+    _onRoute: function(router) {
+        if (this.router === router) {
+            if (!this._started) this.start();
+        } else {
+            if (this._started) this.stop();
+        }
+    },
+
+    /**
+     * The handler for any keyup events,
+     * we want to know if the user is trying to
+     * navigate through the presentation
+     */
+    _onKeyboardEvent: function(e) {
+        switch (e.which) {
+
+            // For left and up, step backward
+            case 37:
+            case 38:
+                this.slides.stepBackward();
+                e.preventDefault();
+                break;
+
+            // For right and down, step forward
+            case 39:
+            case 40:
+                this.slides.stepForward();
+                e.preventDefault();
+                break;
+            default:
+                break;
+        }
     }
 });
-},{"../app":1,"../libs/backbone":8,"./presentation":16}],16:[function(require,module,exports){
+
+module.exports = PresentationModule;
+
+},{"../collections/slides":2,"../config/events":3,"../config/slides":4,"../controllers/presentation":6,"../libs/backbone":7,"../libs/jquery":8,"../libs/marionette":9,"../routes/presentation":15,"../views/presentation":16}],15:[function(require,module,exports){
 'use strict';
 
 var Marionette = require('../libs/marionette'),
-    PresentationController = require('../controllers/presentation'),
     PresentationRouter;
 
+/**
+ * The router for our presentation module,
+ * a good rule of thumb is to have one router per module
+ */
 PresentationRouter = Marionette.AppRouter.extend({
-    controller: new PresentationController(),
     appRoutes: {
         'slides/:id': 'stepTo'
+    },
+    routes: {
+        '': '_init'
+    },
+    _init: function() {
+        this.navigate('slides/1');
     }
 });
 
 module.exports = PresentationRouter;
 
-},{"../controllers/presentation":7,"../libs/marionette":10}],17:[function(require,module,exports){
+},{"../libs/marionette":9}],16:[function(require,module,exports){
 'use strict';
 
 var Marionette = require('../libs/marionette'),
@@ -427,7 +503,7 @@ Presentation = Marionette.CompositeView.extend({
 
 module.exports = Presentation;
 
-},{"../../partials/presentation.hbs":141,"../libs/marionette":10,"./slide":18}],18:[function(require,module,exports){
+},{"../../partials/presentation.hbs":140,"../libs/marionette":9,"./slide":17}],17:[function(require,module,exports){
 'use strict';
 
 var Marionette = require('../libs/marionette'),
@@ -455,10 +531,10 @@ Slide = Marionette.ItemView.extend({
      * Set up event handlers for when we get mouse action
      */
     events: {
-        'touchstart': 'start',
-        'touchend': 'stop',
-        'mousedown': 'start',
-        'mouseup': 'stop'
+        'touchstart': 'startScreenInteraction',
+        'touchend': 'stopScreenInteraction',
+        'mousedown': 'startScreenInteraction',
+        'mouseup': 'stopScreenInteraction'
     },
 
     /**
@@ -509,14 +585,24 @@ Slide = Marionette.ItemView.extend({
         this.stepIndex = idx;
     },
 
-    start: function(e) {
+    /**
+     * When we get a mousedown/touchstart event, set the starting X
+     * coordinate so we can process the interaction once the end event is fired
+     */
+    startScreenInteraction: function(e) {
         var screenX = (e.type === 'touchstart') ?
                 e.originalEvent.changedTouches[0].screenX :
                 e.screenX;
         this.screenEvent.set('startX', screenX);
     },
 
-    stop: function(e) {
+    /**
+     * When we get a mouseup/touchend event, set the ending X
+     * coordinate so we can process the interaction and determine
+     * if we care about the screen event, all logic for that
+     * lives in the screen event model
+     */
+    stopScreenInteraction: function(e) {
         var screenX = (e.type === 'touchend') ?
                 e.originalEvent.changedTouches[0].screenX :
                 e.screenX;
@@ -526,7 +612,7 @@ Slide = Marionette.ItemView.extend({
 
 module.exports = Slide;
 
-},{"../config/templates":6,"../libs/marionette":10,"../models/screen-event":13,"highlight.js":28}],19:[function(require,module,exports){
+},{"../config/templates":5,"../libs/marionette":9,"../models/screen-event":12,"highlight.js":27}],18:[function(require,module,exports){
 "use strict";
 /*globals Handlebars: true */
 var base = require("./handlebars/base");
@@ -562,7 +648,7 @@ Handlebars.create = create;
 Handlebars['default'] = Handlebars;
 
 exports["default"] = Handlebars;
-},{"./handlebars/base":20,"./handlebars/exception":21,"./handlebars/runtime":22,"./handlebars/safe-string":23,"./handlebars/utils":24}],20:[function(require,module,exports){
+},{"./handlebars/base":19,"./handlebars/exception":20,"./handlebars/runtime":21,"./handlebars/safe-string":22,"./handlebars/utils":23}],19:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -794,7 +880,7 @@ var createFrame = function(object) {
   return frame;
 };
 exports.createFrame = createFrame;
-},{"./exception":21,"./utils":24}],21:[function(require,module,exports){
+},{"./exception":20,"./utils":23}],20:[function(require,module,exports){
 "use strict";
 
 var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
@@ -823,7 +909,7 @@ function Exception(message, node) {
 Exception.prototype = new Error();
 
 exports["default"] = Exception;
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 var Utils = require("./utils");
 var Exception = require("./exception")["default"];
@@ -1017,7 +1103,7 @@ exports.noop = noop;function initData(context, data) {
   }
   return data;
 }
-},{"./base":20,"./exception":21,"./utils":24}],23:[function(require,module,exports){
+},{"./base":19,"./exception":20,"./utils":23}],22:[function(require,module,exports){
 "use strict";
 // Build out our basic SafeString type
 function SafeString(string) {
@@ -1029,7 +1115,7 @@ SafeString.prototype.toString = function() {
 };
 
 exports["default"] = SafeString;
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 /*jshint -W004 */
 var SafeString = require("./safe-string")["default"];
@@ -1118,15 +1204,15 @@ exports.isEmpty = isEmpty;function appendContextPath(contextPath, id) {
 }
 
 exports.appendContextPath = appendContextPath;
-},{"./safe-string":23}],25:[function(require,module,exports){
+},{"./safe-string":22}],24:[function(require,module,exports){
 // Create a simple path alias to allow browserify to resolve
 // the runtime on a supported path.
 module.exports = require('./dist/cjs/handlebars.runtime');
 
-},{"./dist/cjs/handlebars.runtime":19}],26:[function(require,module,exports){
+},{"./dist/cjs/handlebars.runtime":18}],25:[function(require,module,exports){
 module.exports = require("handlebars/runtime")["default"];
 
-},{"handlebars/runtime":25}],27:[function(require,module,exports){
+},{"handlebars/runtime":24}],26:[function(require,module,exports){
 /*
 Syntax highlighting with language autodetection.
 https://highlightjs.org/
@@ -1867,7 +1953,7 @@ https://highlightjs.org/
   return hljs;
 }));
 
-},{}],28:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var hljs = require('./highlight');
 
 hljs.registerLanguage('1c', require('./languages/1c'));
@@ -1984,7 +2070,7 @@ hljs.registerLanguage('x86asm', require('./languages/x86asm'));
 hljs.registerLanguage('xl', require('./languages/xl'));
 
 module.exports = hljs;
-},{"./highlight":27,"./languages/1c":29,"./languages/actionscript":30,"./languages/apache":31,"./languages/applescript":32,"./languages/asciidoc":33,"./languages/aspectj":34,"./languages/autohotkey":35,"./languages/avrasm":36,"./languages/axapta":37,"./languages/bash":38,"./languages/brainfuck":39,"./languages/capnproto":40,"./languages/clojure":42,"./languages/clojure-repl":41,"./languages/cmake":43,"./languages/coffeescript":44,"./languages/cpp":45,"./languages/cs":46,"./languages/css":47,"./languages/d":48,"./languages/dart":49,"./languages/delphi":50,"./languages/diff":51,"./languages/django":52,"./languages/dos":53,"./languages/dust":54,"./languages/elixir":55,"./languages/erb":56,"./languages/erlang":58,"./languages/erlang-repl":57,"./languages/fix":59,"./languages/fsharp":60,"./languages/gcode":61,"./languages/gherkin":62,"./languages/glsl":63,"./languages/go":64,"./languages/gradle":65,"./languages/groovy":66,"./languages/haml":67,"./languages/handlebars":68,"./languages/haskell":69,"./languages/haxe":70,"./languages/http":71,"./languages/ini":72,"./languages/java":73,"./languages/javascript":74,"./languages/json":75,"./languages/lasso":76,"./languages/less":77,"./languages/lisp":78,"./languages/livecodeserver":79,"./languages/livescript":80,"./languages/lua":81,"./languages/makefile":82,"./languages/markdown":83,"./languages/mathematica":84,"./languages/matlab":85,"./languages/mel":86,"./languages/mercury":87,"./languages/mizar":88,"./languages/monkey":89,"./languages/nginx":90,"./languages/nimrod":91,"./languages/nix":92,"./languages/nsis":93,"./languages/objectivec":94,"./languages/ocaml":95,"./languages/oxygene":96,"./languages/parser3":97,"./languages/perl":98,"./languages/php":99,"./languages/powershell":100,"./languages/processing":101,"./languages/profile":102,"./languages/protobuf":103,"./languages/puppet":104,"./languages/python":105,"./languages/q":106,"./languages/r":107,"./languages/rib":108,"./languages/roboconf":109,"./languages/rsl":110,"./languages/ruby":111,"./languages/ruleslanguage":112,"./languages/rust":113,"./languages/scala":114,"./languages/scheme":115,"./languages/scilab":116,"./languages/scss":117,"./languages/smali":118,"./languages/smalltalk":119,"./languages/sml":120,"./languages/sql":121,"./languages/stata":122,"./languages/step21":123,"./languages/stylus":124,"./languages/swift":125,"./languages/tcl":126,"./languages/tex":127,"./languages/thrift":128,"./languages/twig":129,"./languages/typescript":130,"./languages/vala":131,"./languages/vbnet":132,"./languages/vbscript":134,"./languages/vbscript-html":133,"./languages/verilog":135,"./languages/vhdl":136,"./languages/vim":137,"./languages/x86asm":138,"./languages/xl":139,"./languages/xml":140}],29:[function(require,module,exports){
+},{"./highlight":26,"./languages/1c":28,"./languages/actionscript":29,"./languages/apache":30,"./languages/applescript":31,"./languages/asciidoc":32,"./languages/aspectj":33,"./languages/autohotkey":34,"./languages/avrasm":35,"./languages/axapta":36,"./languages/bash":37,"./languages/brainfuck":38,"./languages/capnproto":39,"./languages/clojure":41,"./languages/clojure-repl":40,"./languages/cmake":42,"./languages/coffeescript":43,"./languages/cpp":44,"./languages/cs":45,"./languages/css":46,"./languages/d":47,"./languages/dart":48,"./languages/delphi":49,"./languages/diff":50,"./languages/django":51,"./languages/dos":52,"./languages/dust":53,"./languages/elixir":54,"./languages/erb":55,"./languages/erlang":57,"./languages/erlang-repl":56,"./languages/fix":58,"./languages/fsharp":59,"./languages/gcode":60,"./languages/gherkin":61,"./languages/glsl":62,"./languages/go":63,"./languages/gradle":64,"./languages/groovy":65,"./languages/haml":66,"./languages/handlebars":67,"./languages/haskell":68,"./languages/haxe":69,"./languages/http":70,"./languages/ini":71,"./languages/java":72,"./languages/javascript":73,"./languages/json":74,"./languages/lasso":75,"./languages/less":76,"./languages/lisp":77,"./languages/livecodeserver":78,"./languages/livescript":79,"./languages/lua":80,"./languages/makefile":81,"./languages/markdown":82,"./languages/mathematica":83,"./languages/matlab":84,"./languages/mel":85,"./languages/mercury":86,"./languages/mizar":87,"./languages/monkey":88,"./languages/nginx":89,"./languages/nimrod":90,"./languages/nix":91,"./languages/nsis":92,"./languages/objectivec":93,"./languages/ocaml":94,"./languages/oxygene":95,"./languages/parser3":96,"./languages/perl":97,"./languages/php":98,"./languages/powershell":99,"./languages/processing":100,"./languages/profile":101,"./languages/protobuf":102,"./languages/puppet":103,"./languages/python":104,"./languages/q":105,"./languages/r":106,"./languages/rib":107,"./languages/roboconf":108,"./languages/rsl":109,"./languages/ruby":110,"./languages/ruleslanguage":111,"./languages/rust":112,"./languages/scala":113,"./languages/scheme":114,"./languages/scilab":115,"./languages/scss":116,"./languages/smali":117,"./languages/smalltalk":118,"./languages/sml":119,"./languages/sql":120,"./languages/stata":121,"./languages/step21":122,"./languages/stylus":123,"./languages/swift":124,"./languages/tcl":125,"./languages/tex":126,"./languages/thrift":127,"./languages/twig":128,"./languages/typescript":129,"./languages/vala":130,"./languages/vbnet":131,"./languages/vbscript":133,"./languages/vbscript-html":132,"./languages/verilog":134,"./languages/vhdl":135,"./languages/vim":136,"./languages/x86asm":137,"./languages/xl":138,"./languages/xml":139}],28:[function(require,module,exports){
 module.exports = function(hljs){
   var IDENT_RE_RU = '[a-zA-Zа-яА-Я][a-zA-Z0-9_а-яА-Я]*';
   var OneS_KEYWORDS = 'возврат дата для если и или иначе иначеесли исключение конецесли ' +
@@ -2070,7 +2156,7 @@ module.exports = function(hljs){
     ]
   };
 };
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE = '[a-zA-Z_$][a-zA-Z0-9_$]*';
   var IDENT_FUNC_RETURN_TYPE_RE = '([*]|[a-zA-Z_$][a-zA-Z0-9_$]*)';
@@ -2144,7 +2230,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 module.exports = function(hljs) {
   var NUMBER = {className: 'number', begin: '[\\$%]\\d+'};
   return {
@@ -2190,7 +2276,7 @@ module.exports = function(hljs) {
     illegal: /\S/
   };
 };
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = function(hljs) {
   var STRING = hljs.inherit(hljs.QUOTE_STRING_MODE, {illegal: ''});
   var PARAMS = {
@@ -2286,7 +2372,7 @@ module.exports = function(hljs) {
     illegal: '//|->|=>'
   };
 };
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     contains: [
@@ -2475,7 +2561,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 module.exports = function (hljs) {
   var KEYWORDS =
     'false synchronized int abstract float private char boolean static null if const ' +
@@ -2611,7 +2697,7 @@ module.exports = function (hljs) {
     ]
   };
 };
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 module.exports = function(hljs) {
   var BACKTICK_ESCAPE = {
     className: 'escape',
@@ -2671,7 +2757,7 @@ module.exports = function(hljs) {
     ])
   }
 };
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     case_insensitive: true,
@@ -2727,7 +2813,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: 'false int abstract private char boolean static null if for true ' +
@@ -2758,7 +2844,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 module.exports = function(hljs) {
   var VAR = {
     className: 'variable',
@@ -2834,7 +2920,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 module.exports = function(hljs){
   var LITERAL = {
     className: 'literal',
@@ -2870,7 +2956,7 @@ module.exports = function(hljs){
     ]
   };
 };
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['capnp'],
@@ -2919,7 +3005,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],41:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     contains: [
@@ -2934,7 +3020,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],42:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 module.exports = function(hljs) {
   var keywords = {
     built_in:
@@ -3033,7 +3119,7 @@ module.exports = function(hljs) {
     contains: [LIST, STRING, HINT, HINT_COL, COMMENT, KEY, COLLECTION, NUMBER, LITERAL]
   }
 };
-},{}],43:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['cmake.in'],
@@ -3072,7 +3158,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = function(hljs) {
   var KEYWORDS = {
     keyword:
@@ -3220,7 +3306,7 @@ module.exports = function(hljs) {
     ])
   };
 };
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = function(hljs) {
   var CPP_KEYWORDS = {
     keyword: 'false int float while private char catch export virtual operator sizeof ' +
@@ -3323,7 +3409,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],46:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 module.exports = function(hljs) {
   var KEYWORDS =
     // Normal keywords.
@@ -3423,7 +3509,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],47:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE = '[a-zA-Z-][a-zA-Z0-9_-]*';
   var FUNCTION = {
@@ -3527,7 +3613,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],48:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 module.exports = /**
  * Known issues:
  *
@@ -3784,7 +3870,7 @@ function(hljs) {
     ]
   };
 };
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 module.exports = function (hljs) {
   var SUBST = {
     className: 'subst',
@@ -3883,7 +3969,7 @@ module.exports = function (hljs) {
     ]
   }
 };
-},{}],50:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 module.exports = function(hljs) {
   var KEYWORDS =
     'exports register file shl array record property for mod while set ally label uses raise not ' +
@@ -3942,7 +4028,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['patch'],
@@ -3982,7 +4068,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],52:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 module.exports = function(hljs) {
   var FILTER = {
     className: 'filter',
@@ -4038,7 +4124,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],53:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 module.exports = function(hljs) {
   var COMMENT = {
     className: 'comment',
@@ -4085,7 +4171,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],54:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 module.exports = function(hljs) {
   var EXPRESSION_KEYWORDS = 'if eq ne lt lte gt gte select default math sep';
   return {
@@ -4120,7 +4206,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],55:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 module.exports = function(hljs) {
   var ELIXIR_IDENT_RE = '[a-zA-Z_][a-zA-Z0-9_]*(\\!|\\?)?';
   var ELIXIR_METHOD_RE = '[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?';
@@ -4229,7 +4315,7 @@ module.exports = function(hljs) {
     contains: ELIXIR_DEFAULT_CONTAINS
   };
 };
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     subLanguage: 'xml', subLanguageMode: 'continuous',
@@ -4247,7 +4333,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],57:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -4298,7 +4384,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],58:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 module.exports = function(hljs) {
   var BASIC_ATOM_RE = '[a-z\'][a-zA-Z0-9_\']*';
   var FUNCTION_NAME_RE = '(' + BASIC_ATOM_RE + ':' + BASIC_ATOM_RE + '|' + BASIC_ATOM_RE + ')';
@@ -4453,7 +4539,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],59:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     contains: [
@@ -4482,7 +4568,7 @@ module.exports = function(hljs) {
     case_insensitive: true
   };
 };
-},{}],60:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 module.exports = function(hljs) {
   var TYPEPARAM = {
     begin: '<', end: '>',
@@ -4541,7 +4627,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 module.exports = function(hljs) {
     var GCODE_IDENT_RE = '[A-Z_][A-Z0-9_.]*';
     var GCODE_CLOSE_RE = '\\%';
@@ -4618,7 +4704,7 @@ module.exports = function(hljs) {
         ].concat(GCODE_CODE)
     };
 };
-},{}],62:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 module.exports = function (hljs) {
   return {
     aliases: ['feature'],
@@ -4649,7 +4735,7 @@ module.exports = function (hljs) {
     ]
   };
 };
-},{}],63:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -4743,7 +4829,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 module.exports = function(hljs) {
   var GO_KEYWORDS = {
     keyword:
@@ -4782,7 +4868,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],65:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     case_insensitive: true,
@@ -4817,7 +4903,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],66:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 module.exports = function(hljs) {
     return {
         keywords: {
@@ -4903,7 +4989,7 @@ module.exports = function(hljs) {
         ]
     }
 };
-},{}],67:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 module.exports = // TODO support filter tags like :javascript, support inline HTML
 function(hljs) {
   return {
@@ -5025,7 +5111,7 @@ function(hljs) {
     ]
   };
 };
-},{}],68:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 module.exports = function(hljs) {
   var EXPRESSION_KEYWORDS = 'each in with if else unless bindattr action collection debugger log outlet template unbound view yield';
   return {
@@ -5058,7 +5144,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],69:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 module.exports = function(hljs) {
 
   var COMMENT = {
@@ -5184,7 +5270,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],70:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE = '[a-zA-Z_$][a-zA-Z0-9_$]*';
   var IDENT_FUNC_RETURN_TYPE_RE = '([*]|[a-zA-Z_$][a-zA-Z0-9_$]*)';
@@ -5245,7 +5331,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],71:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     illegal: '\\S',
@@ -5279,7 +5365,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],72:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     case_insensitive: true,
@@ -5309,7 +5395,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],73:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 module.exports = function(hljs) {
   var GENERIC_IDENT_RE = hljs.UNDERSCORE_IDENT_RE + '(<' + hljs.UNDERSCORE_IDENT_RE + '>)?';
   var KEYWORDS =
@@ -5393,7 +5479,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],74:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['js'],
@@ -5468,7 +5554,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],75:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 module.exports = function(hljs) {
   var LITERALS = {literal: 'true false null'};
   var TYPES = [
@@ -5506,7 +5592,7 @@ module.exports = function(hljs) {
     illegal: '\\S'
   };
 };
-},{}],76:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 module.exports = function(hljs) {
   var LASSO_IDENT_RE = '[a-zA-Z_][a-zA-Z0-9_.]*';
   var LASSO_ANGLE_RE = '<\\?(lasso(script)?|=)';
@@ -5691,7 +5777,7 @@ module.exports = function(hljs) {
     ].concat(LASSO_CODE)
   };
 };
-},{}],77:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE        = '[\\w-]+'; // yes, Less identifiers may begin with a digit
   var INTERP_IDENT_RE = '(' + IDENT_RE + '|@{' + IDENT_RE + '})+';
@@ -5828,7 +5914,7 @@ module.exports = function(hljs) {
     contains: RULES
   };
 };
-},{}],78:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 module.exports = function(hljs) {
   var LISP_IDENT_RE = '[a-zA-Z_\\-\\+\\*\\/\\<\\=\\>\\&\\#][a-zA-Z0-9_\\-\\+\\*\\/\\<\\=\\>\\&\\#!]*';
   var MEC_RE = '\\|[^]*?\\|';
@@ -5925,7 +6011,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],79:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 module.exports = function(hljs) {
   var VARIABLE = {
     className: 'variable', begin: '\\b[gtps][A-Z]+[A-Za-z0-9_\\-]*\\b|\\$_[A-Z]+',
@@ -6094,7 +6180,7 @@ module.exports = function(hljs) {
     illegal: ';$|^\\[|^='
   };
 };
-},{}],80:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 module.exports = function(hljs) {
   var KEYWORDS = {
     keyword:
@@ -6248,7 +6334,7 @@ module.exports = function(hljs) {
     ])
   };
 };
-},{}],81:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 module.exports = function(hljs) {
   var OPENING_LONG_BRACKET = '\\[=*\\[';
   var CLOSING_LONG_BRACKET = '\\]=*\\]';
@@ -6305,7 +6391,7 @@ module.exports = function(hljs) {
     ])
   };
 };
-},{}],82:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 module.exports = function(hljs) {
   var VARIABLE = {
     className: 'variable',
@@ -6351,7 +6437,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],83:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['md', 'mkdown', 'mkd'],
@@ -6453,7 +6539,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],84:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['mma'],
@@ -6512,7 +6598,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],85:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 module.exports = function(hljs) {
   var COMMON_CONTAINS = [
     hljs.C_NUMBER_MODE,
@@ -6606,7 +6692,7 @@ module.exports = function(hljs) {
     ].concat(COMMON_CONTAINS)
   };
 };
-},{}],86:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords:
@@ -6836,7 +6922,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],87:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 module.exports = function(hljs) {
   var KEYWORDS = {
     keyword:
@@ -6925,7 +7011,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],88:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords:
@@ -6947,7 +7033,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],89:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 module.exports = function(hljs) {
   var NUMBER = {
     className: 'number', relevance: 0,
@@ -7026,7 +7112,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],90:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 module.exports = function(hljs) {
   var VAR = {
     className: 'variable',
@@ -7108,7 +7194,7 @@ module.exports = function(hljs) {
     illegal: '[^\\s\\}]'
   };
 };
-},{}],91:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -7163,7 +7249,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],92:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 module.exports = function(hljs) {
   var NIX_KEYWORDS = {
     keyword: 'rec with let in inherit assert if else then',
@@ -7213,7 +7299,7 @@ module.exports = function(hljs) {
     contains: EXPRESSIONS
   };
 };
-},{}],93:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 module.exports = function(hljs) {
   var CONSTANTS = {
     className: 'symbol',
@@ -7299,7 +7385,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 module.exports = function(hljs) {
   var OBJC_KEYWORDS = {
     keyword:
@@ -7386,7 +7472,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 module.exports = function(hljs) {
   /* missing support for heredoc-like string (OCaml 4.0.2+) */
   return {
@@ -7454,7 +7540,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],96:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 module.exports = function(hljs) {
   var OXYGENE_KEYWORDS = 'abstract add and array as asc aspect assembly async begin break block by case class concat const copy constructor continue '+
     'create default delegate desc distinct div do downto dynamic each else empty end ensure enum equals event except exit extension external false '+
@@ -7519,7 +7605,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     subLanguage: 'xml', relevance: 0,
@@ -7564,7 +7650,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 module.exports = function(hljs) {
   var PERL_KEYWORDS = 'getpwent getservent quotemeta msgrcv scalar kill dbmclose undef lc ' +
     'ma syswrite tr send umask sysopen shmwrite vec qx utime local oct semctl localtime ' +
@@ -7713,7 +7799,7 @@ module.exports = function(hljs) {
     contains: PERL_DEFAULT_CONTAINS
   };
 };
-},{}],99:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 module.exports = function(hljs) {
   var VARIABLE = {
     className: 'variable', begin: '\\$+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*'
@@ -7823,7 +7909,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],100:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 module.exports = function(hljs) {
   var backtickEscape = {
     begin: '`[\\s\\S]',
@@ -7875,7 +7961,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],101:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -7923,7 +8009,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],102:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     contains: [
@@ -7965,7 +8051,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],103:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -8002,7 +8088,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],104:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 module.exports = function(hljs) {
   var PUPPET_TYPE_REFERENCE =
       'augeas computer cron exec file filebucket host interface k5login macauthorization mailalias maillist mcx mount nagios_command ' +
@@ -8112,7 +8198,7 @@ module.exports = function(hljs) {
     contains: PUPPET_DEFAULT_CONTAINS
   }
 };
-},{}],105:[function(require,module,exports){
+},{}],104:[function(require,module,exports){
 module.exports = function(hljs) {
   var PROMPT = {
     className: 'prompt',  begin: /^(>>>|\.\.\.) /
@@ -8197,7 +8283,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],106:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 module.exports = function(hljs) {
   var Q_KEYWORDS = {
   keyword:
@@ -8220,7 +8306,7 @@ module.exports = function(hljs) {
      ]
   };
 };
-},{}],107:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE = '([a-zA-Z]|\\.[a-zA-Z.])[a-zA-Z0-9._]*';
 
@@ -8290,7 +8376,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],108:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords:
@@ -8317,7 +8403,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],109:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENTIFIER = '[a-zA-Z-_][^\n{\r\n]+\\{';
 
@@ -8377,7 +8463,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],110:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -8414,7 +8500,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],111:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 module.exports = function(hljs) {
   var RUBY_METHOD_RE = '[a-zA-Z_]\\w*[!?=]?|[-+~]\\@|<<|>>|=~|===?|<=>|[<>]=?|\\*\\*|[-/+%^&*~`|]|\\[\\]=?';
   var RUBY_KEYWORDS =
@@ -8586,7 +8672,7 @@ module.exports = function(hljs) {
     contains: [COMMENT].concat(IRB_DEFAULT).concat(RUBY_DEFAULT_CONTAINS)
   };
 };
-},{}],112:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -8643,7 +8729,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],113:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 module.exports = function(hljs) {
   var BLOCK_COMMENT = hljs.inherit(hljs.C_BLOCK_COMMENT_MODE);
   BLOCK_COMMENT.contains.push('self');
@@ -8716,7 +8802,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],114:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 module.exports = function(hljs) {
 
   var ANNOTATION = {
@@ -8789,7 +8875,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],115:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 module.exports = function(hljs) {
   var SCHEME_IDENT_RE = '[^\\(\\)\\[\\]\\{\\}",\'`;#|\\\\\\s]+';
   var SCHEME_SIMPLE_NUMBER_RE = '(\\-|\\+)?\\d+([./]\\d+)?';
@@ -8908,7 +8994,7 @@ module.exports = function(hljs) {
     contains: [SHEBANG, NUMBER, STRING, COMMENT, QUOTED_IDENT, LIST]
   };
 };
-},{}],116:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 module.exports = function(hljs) {
 
   var COMMON_CONTAINS = [
@@ -8966,7 +9052,7 @@ module.exports = function(hljs) {
     ].concat(COMMON_CONTAINS)
   };
 };
-},{}],117:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 module.exports = function(hljs) {
   var IDENT_RE = '[a-zA-Z-][a-zA-Z0-9_-]*';
   var VARIABLE = {
@@ -9083,7 +9169,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],118:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 module.exports = function(hljs) {
   var smali_instr_low_prio = ['add', 'and', 'cmp', 'cmpg', 'cmpl', 'const', 'div', 'double', 'float', 'goto', 'if', 'int', 'long', 'move', 'mul', 'neg', 'new', 'nop', 'not', 'or', 'rem', 'return', 'shl', 'shr', 'sput', 'sub', 'throw', 'ushr', 'xor'];
   var smali_instr_high_prio = ['aget', 'aput', 'array', 'check', 'execute', 'fill', 'filled', 'goto/16', 'goto/32', 'iget', 'instance', 'invoke', 'iput', 'monitor', 'packed', 'sget', 'sparse'];
@@ -9164,7 +9250,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],119:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 module.exports = function(hljs) {
   var VAR_IDENT_RE = '[a-z][a-zA-Z0-9_]*';
   var CHAR = {
@@ -9220,7 +9306,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],120:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['ml'],
@@ -9283,7 +9369,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],121:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 module.exports = function(hljs) {
   var COMMENT_MODE = {
     className: 'comment',
@@ -9386,7 +9472,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],122:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['do', 'ado'],
@@ -9427,7 +9513,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],123:[function(require,module,exports){
+},{}],122:[function(require,module,exports){
 module.exports = function(hljs) {
   var STEP21_IDENT_RE = '[A-Z_][A-Z0-9_.]*';
   var STEP21_CLOSE_RE = 'END-ISO-10303-21;';
@@ -9483,7 +9569,7 @@ module.exports = function(hljs) {
     ].concat(STEP21_CODE)
   };
 };
-},{}],124:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 module.exports = function(hljs) {
 
   var VARIABLE = {
@@ -9925,7 +10011,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],125:[function(require,module,exports){
+},{}],124:[function(require,module,exports){
 module.exports = function(hljs) {
   var SWIFT_KEYWORDS = {
       keyword: 'class deinit enum extension func import init let protocol static ' +
@@ -10034,7 +10120,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],126:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['tk'],
@@ -10101,7 +10187,7 @@ module.exports = function(hljs) {
     ]
   }
 };
-},{}],127:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 module.exports = function(hljs) {
   var COMMAND1 = {
     className: 'command',
@@ -10154,7 +10240,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],128:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 module.exports = function(hljs) {
   var BUILT_IN_TYPES = 'bool byte i16 i32 i64 double string binary';
   return {
@@ -10190,7 +10276,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],129:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 module.exports = function(hljs) {
   var PARAMS = {
     className: 'params',
@@ -10250,7 +10336,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],130:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['ts'],
@@ -10337,7 +10423,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],131:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     keywords: {
@@ -10392,7 +10478,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],132:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['vb'],
@@ -10443,7 +10529,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],133:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     subLanguage: 'xml', subLanguageMode: 'continuous',
@@ -10455,7 +10541,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],134:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['vbs'],
@@ -10492,7 +10578,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],135:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     aliases: ['v'],
@@ -10542,7 +10628,7 @@ module.exports = function(hljs) {
     ]
   }; // return
 };
-},{}],136:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     case_insensitive: true,
@@ -10585,7 +10671,7 @@ module.exports = function(hljs) {
     ]
   }; // return
 };
-},{}],137:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     lexemes: /[!#@\w]+/,
@@ -10648,7 +10734,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],138:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 module.exports = function(hljs) {
   return {
     case_insensitive: true,
@@ -10795,7 +10881,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],139:[function(require,module,exports){
+},{}],138:[function(require,module,exports){
 module.exports = function(hljs) {
   var BUILTIN_MODULES = 'ObjectLoader Animate MovieCredits Slides Filters Shading Materials LensFlare Mapping VLCAudioVideo StereoDecoder PointCloud NetworkAccess RemoteControl RegExp ChromaKey Snowfall NodeJS Speech Charts';
 
@@ -10875,7 +10961,7 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],140:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 module.exports = function(hljs) {
   var XML_IDENT_RE = '[A-Za-z0-9\\._:-]+';
   var PHP = {
@@ -10976,172 +11062,186 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}],141:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"slides\"></div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],142:[function(require,module,exports){
+},{"hbsfy/runtime":25}],141:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1></h1>\n<ul class=\"steps\"></ul>\n<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\"></code>\n    </pre>\n</div>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],143:[function(require,module,exports){
+},{"hbsfy/runtime":25}],142:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nvar Marionette = require('./libs/marionette'),\n    Backbone = require('./libs/backbone'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '#app'\n    }\n});\n\n{ ... } // handle any app configuration\n\napp.on('start', function() {\n    if (Backbone.history) {\n        Backbone.history.start();\n    }\n});\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],144:[function(require,module,exports){
+},{"hbsfy/runtime":25}],143:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Browserify + Marionette = <span><i class=\"fa fa-heart\"></i></span></h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],145:[function(require,module,exports){
+},{"hbsfy/runtime":25}],144:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Getting Browserify Set Up</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],146:[function(require,module,exports){
+},{"hbsfy/runtime":25}],145:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nbrowserify js/main.js -o dist/js/app.js\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nbrowserify js/main.js -o dist/js/app.js -d\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],147:[function(require,module,exports){
+},{"hbsfy/runtime":25}],146:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.json */\n\ngrunt.initConfig({\n    browserify: {\n        app: {\n            files: {\n                'dist/js/app.js': ['js/**/*.js']\n            },\n            options: {\n                transform: [\"hbsfy\"],\n                browserifyOptions: {\n                    debug: true\n                }\n            }\n        }\n    },\n...\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],148:[function(require,module,exports){
+},{"hbsfy/runtime":25}],147:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.json */\n\ngrunt.initConfig({\n    uglify: {\n        dependencies: {\n            files: {\n                   'dist/js/dependencies.min.js': [\n                       'libs/underscore/underscore.js',\n                       'libs/jquery/dist/jquery.js',\n                       'libs/backbone/backbone.js',\n                       'libs/marionette/lib/backbone.marionette.js'\n                   ]\n               }\n            }\n        }\n    },\n...\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],149:[function(require,module,exports){
+},{"hbsfy/runtime":25}],148:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* package.json */\n\n...\n\"browserify\": {\n    \"transform\": [\"hbsfy\"],\n    \"options\": {\n        \"debug\": true\n    }\n},\n...\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],150:[function(require,module,exports){
+},{"hbsfy/runtime":25}],149:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/libs/jquery.js */\nmodule.exports = jQuery;\n\n/* js/libs/underscore.js */\nmodule.exports = _;\n\n/* js/libs/backbone.js */\nmodule.exports = Backbone;\n\n/* js/libs/marionette.js */\nmodule.exports = Marionette;\n\n/* usage */\nvar $ = require('./libs/jquery'),\n    _ = require('./libs/underscore'),\n    Backbone = require('./libs/backbone'),\n    Marionette = require('./libs/marionette');\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],151:[function(require,module,exports){
+},{"hbsfy/runtime":25}],150:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.json */\n\ngrunt.initConfig({\n    browserify: {\n\n        // tells Browserify to transform all\n        // .hbs files into functions\n        transform: [\"hbsfy\"],\n        ...\n    },\n...\n\n/* js/views/presentation.js */\n\n// we can then just require the handlebars function for our template\nvar Presentation = Marionette.CompositeView.extend({\n    template: require('../../partials/presentation.hbs'),\n...\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],152:[function(require,module,exports){
+},{"hbsfy/runtime":25}],151:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Browserify + Marionette</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],153:[function(require,module,exports){
+},{"hbsfy/runtime":25}],152:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/app.js */\n\nvar Marionette = require('./libs/marionette'),\n    Backbone = require('./libs/backbone'),\n    vent = require('./config/events'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '#app'\n    }\n});\napp.router = new Backbone.Router();\nvent.on('app:navigate', function(path, trigger) { ... });\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/app.js */\n\nvar Marionette = require('./libs/marionette'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '#app'\n    }\n});\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],154:[function(require,module,exports){
+},{"hbsfy/runtime":25}],153:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n\n/* js/main.js */\n\nvar app = require('./app'),\n    Slides = require('./collections/slides'),\n    slidesConfig = require('./config/slides'),\n    Presentation = require('./views/presentation'),\n    reqres = require('./config/reqres'),\n    slides,\n    presentation;\n\nslides = new Slides(slidesConfig);\npresentation = new Presentation({ collection: slides });\nreqres.setHandler('slides', function() { return slides; });\napp.addInitializer(function() { app.mainRegion.show(presentation); });\n\napp.start();\n\n        </code>\n    </pre>\n</div>\n";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n\n/* js/main.js */\n\nvar app = require('./app'),\n    Backbone = require('./libs/backbone'),\n    vent = require('./config/events'),\n    PresentationModule = require('./modules/presentation');\n\n// add any app level event listerers\nvent.on('app:screen', function(view) { ... });\nvent.on('app:setTitle', function(title) { ... });\nvent.on('app:navigate', function(path, trigger) { ... });\n\n// add all modules\napp.module('presenation', PresentationModule);\n...\n\napp.start();\nBackbone.history.start();\n        </code>\n    </pre>\n</div>\n";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],155:[function(require,module,exports){
+},{"hbsfy/runtime":25}],154:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Configuration + Initialization</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],156:[function(require,module,exports){
+},{"hbsfy/runtime":25}],155:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/views/slide.js */\n\nvar Marionette = require('../libs/marionette'),\n    templates = require('../config/templates'),\n    hljs = require('highlight.js'), // NPM module\n    Slide;\n\nSlide = Marionette.ItemView.extend({\n    template: function(modelAttrs) { return templates[modelAttrs.id]; },\n    events: { ... },\n    modelEvents: { ... },\n    initialize: function() { ... },\n    onRender: function() { ... },\n    transition: function() { ... },\n    step: function() { ... }\n});\n\nmodule.exports = Slide;\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/views/slide.js */\n\nvar Marionette = require('../libs/marionette'),\n    templates = require('../config/templates'),\n    hljs = require('highlight.js'), // NPM module\n    Slide;\n\nSlide = Marionette.ItemView.extend({\n    template: function(modelAttrs) { return templates[modelAttrs.id]; },\n    events: { ... },\n    modelEvents: { ... },\n    initialize: function() { ... },\n    onRender: function() { ... },\n    transition: function() { ... },\n    step: function() { ... },\n    startScreenInteraction: { ... },\n    stopScreenInteraction: { ... }\n});\n\nmodule.exports = Slide;\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],157:[function(require,module,exports){
+},{"hbsfy/runtime":25}],156:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Keep Things Small</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],158:[function(require,module,exports){
+},{"hbsfy/runtime":25}],157:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/modules/presentation.js */\n\nvar Marionette = require('../libs/marionette'),\n    ...\n    PresentationModule;\n\nPresentationModule = Marionette.Module.extend({\n    startWithParent: false,\n    _started: false,\n    initialize: function() { ... },\n    onStart: function() { ... },\n    onStop: function() { ... },\n    _onStepEvent: function(action) { ... },\n    _onRoute: function(router) { ... },\n    _onKeyboardEvent: function(e) { ... }\n});\n\nmodule.exports = PresentationModule;\n\n        </code>\n    </pre>\n</div>";
+  },"useData":true});
+
+},{"hbsfy/runtime":25}],158:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<h1>What About Modules?</h1>";
+  },"useData":true});
+
+},{"hbsfy/runtime":25}],159:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.js */\n\ngrunt.registerTask('compile-templates', function() {\n    var js = '';\n    grunt.file.recurse('partials/slides/',\n            function(abspath, rootdir, subdir, filename) {\n\n        var file = filename.replace('.hbs', '');\n        js += 'module.exports.' +\n                file +\n                ' = require(\\'../../../partials/slides/' +\n                file +\n                '.hbs\\');' +\n                '\\n';\n    });\n    grunt.file.write('js/config/templates/index.js', js);\n});\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],159:[function(require,module,exports){
+},{"hbsfy/runtime":25}],160:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* js/config/templates/index.js */\n\nmodule.exports.entry = require('...');\nmodule.exports.gettingSetUp = require('...');\nmodule.exports.gettingSetUpConsole = require('...');\nmodule.exports.gettingSetUpGrunt = require('...');\n\n\n/* usage */\n\nvar templates = require('./config/templates');\nvar html = templates.gettingSetUpGrunt(data);\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],160:[function(require,module,exports){
+},{"hbsfy/runtime":25}],161:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Pre-compiling Templates</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],161:[function(require,module,exports){
+},{"hbsfy/runtime":25}],162:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>So why use Browserify?</h1>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],162:[function(require,module,exports){
+},{"hbsfy/runtime":25}],163:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Easy Build Integration</h1>\n<img src=\"img/gulp-grunt.png\" alt=\"\">";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],163:[function(require,module,exports){
+},{"hbsfy/runtime":25}],164:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>CommonJS Style Modules</h1>\n<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nvar Marionette = require('./libs/marionette'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '#app'\n    }\n});\n\n// handle any app configuration\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
-},{"hbsfy/runtime":26}],164:[function(require,module,exports){
+},{"hbsfy/runtime":25}],165:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<h1>Access To NPM Modules</h1>\n<img src=\"img/npm.png\" style=\"width: 40vw\" alt=\"\">";
   },"useData":true});
 
-},{"hbsfy/runtime":26}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]);
+},{"hbsfy/runtime":25}]},{},[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]);
