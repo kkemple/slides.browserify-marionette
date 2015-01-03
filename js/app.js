@@ -52,6 +52,9 @@ SwipeInteraction = Marionette.Behavior.extend({
         this.screenEvent.set('endX', screenX);
     }
 });
+
+module.exports = SwipeInteraction;
+
 },{"../libs/marionette":11,"../models/swipe-event":15}],3:[function(require,module,exports){
 'use strict';
 
