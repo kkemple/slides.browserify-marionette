@@ -2252,13 +2252,17 @@ body {
           /* line 63, ../../sass/app.scss */
           #app .presentation .slides .slide .steps li {
             margin-bottom: 3vh; }
-        /* line 70, ../../sass/app.scss */
-        #app .presentation .slides .slide pre code {
-          display: block;
-          font-size: 2vw;
-          text-shadow: none;
-          background-color: transparent !important; }
-        /* line 78, ../../sass/app.scss */
+        /* line 68, ../../sass/app.scss */
+        #app .presentation .slides .slide pre {
+          margin: 0; }
+          /* line 71, ../../sass/app.scss */
+          #app .presentation .slides .slide pre code {
+            display: block;
+            font-size: 2vw;
+            text-shadow: none;
+            background-color: transparent !important;
+            padding: 0; }
+        /* line 80, ../../sass/app.scss */
         #app .presentation .slides .slide img {
           max-width: 60vw; }
 
