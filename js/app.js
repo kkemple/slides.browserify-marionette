@@ -234,7 +234,12 @@ module.exports = [
     { id: 'marionetteTemplates2', title: 'Browserify + Marionette - Pre-compiling Templates - 2' },
     { id: 'marionetteModulesTitle', title: 'Browserify + Marionette - What About Modules ?', titleSlide: true },
     { id: 'marionetteModulesOldWay', title: 'Browserify + Marionette - How It Was' },
-    { id: 'marionetteModules1', title: 'Browserify + Marionette - Put To Better Use' }
+    { id: 'marionetteModules1', title: 'Browserify + Marionette - Put To Better Use' },
+    { id: 'soDry', title: 'Browserify + Marionette - Getting Really DRY', titleSlide: true },
+    { id: 'soDry1', title: 'Browserify + Marionette - Public NPM' },
+    { id: 'soDry2', title: 'Browserify + Marionette - Private NPM' },
+    { id: 'moar', title: 'Browserify + Marionette - MOAR!!', titleSlide: true },
+    { id: 'resources', title: 'Browserify + Marionette - Resources', steps: 4 }
 ];
 
 },{}],7:[function(require,module,exports){
@@ -264,6 +269,11 @@ module.exports.marionetteModulesTitle = require('../../../partials/slides/marion
 module.exports.marionetteTemplates1 = require('../../../partials/slides/marionetteTemplates1.hbs');
 module.exports.marionetteTemplates2 = require('../../../partials/slides/marionetteTemplates2.hbs');
 module.exports.marionetteWorkingWithTemplates = require('../../../partials/slides/marionetteWorkingWithTemplates.hbs');
+module.exports.moar = require('../../../partials/slides/moar.hbs');
+module.exports.resources = require('../../../partials/slides/resources.hbs');
+module.exports.soDry = require('../../../partials/slides/soDry.hbs');
+module.exports.soDry1 = require('../../../partials/slides/soDry1.hbs');
+module.exports.soDry2 = require('../../../partials/slides/soDry2.hbs');
 module.exports.whatIs = require('../../../partials/slides/whatIs.hbs');
 module.exports.whatIsQuote = require('../../../partials/slides/whatIsQuote.hbs');
 module.exports.whyUse = require('../../../partials/slides/whyUse.hbs');
@@ -271,7 +281,7 @@ module.exports.whyUseBuildIntegration = require('../../../partials/slides/whyUse
 module.exports.whyUseCommonJS = require('../../../partials/slides/whyUseCommonJS.hbs');
 module.exports.whyUseNpmModules = require('../../../partials/slides/whyUseNpmModules.hbs');
 
-},{"../../../partials/slides/entry.hbs":144,"../../../partials/slides/followAlong.hbs":145,"../../../partials/slides/gettingSetUp.hbs":146,"../../../partials/slides/gettingSetUpConsole.hbs":147,"../../../partials/slides/gettingSetUpGrunt.hbs":148,"../../../partials/slides/gettingSetUpNonNpmDeps.hbs":149,"../../../partials/slides/gettingSetUpPackageJson.hbs":150,"../../../partials/slides/gettingSetUpShimmingCommonJSModules.hbs":151,"../../../partials/slides/gettingSetUpShimmingGlobals.hbs":152,"../../../partials/slides/gettingSetUpUnderstandingTransforms.hbs":153,"../../../partials/slides/marionette.hbs":154,"../../../partials/slides/marionetteAppConfig.hbs":155,"../../../partials/slides/marionetteAppStart.hbs":156,"../../../partials/slides/marionetteConfigInit.hbs":157,"../../../partials/slides/marionetteKeepThingsSmall.hbs":158,"../../../partials/slides/marionetteKeepThingsSmallTitle.hbs":159,"../../../partials/slides/marionetteModules1.hbs":160,"../../../partials/slides/marionetteModulesOldWay.hbs":161,"../../../partials/slides/marionetteModulesTitle.hbs":162,"../../../partials/slides/marionetteTemplates1.hbs":163,"../../../partials/slides/marionetteTemplates2.hbs":164,"../../../partials/slides/marionetteWorkingWithTemplates.hbs":165,"../../../partials/slides/whatIs.hbs":166,"../../../partials/slides/whatIsQuote.hbs":167,"../../../partials/slides/whyUse.hbs":168,"../../../partials/slides/whyUseBuildIntegration.hbs":169,"../../../partials/slides/whyUseCommonJS.hbs":170,"../../../partials/slides/whyUseNpmModules.hbs":171}],8:[function(require,module,exports){
+},{"../../../partials/slides/entry.hbs":144,"../../../partials/slides/followAlong.hbs":145,"../../../partials/slides/gettingSetUp.hbs":146,"../../../partials/slides/gettingSetUpConsole.hbs":147,"../../../partials/slides/gettingSetUpGrunt.hbs":148,"../../../partials/slides/gettingSetUpNonNpmDeps.hbs":149,"../../../partials/slides/gettingSetUpPackageJson.hbs":150,"../../../partials/slides/gettingSetUpShimmingCommonJSModules.hbs":151,"../../../partials/slides/gettingSetUpShimmingGlobals.hbs":152,"../../../partials/slides/gettingSetUpUnderstandingTransforms.hbs":153,"../../../partials/slides/marionette.hbs":154,"../../../partials/slides/marionetteAppConfig.hbs":155,"../../../partials/slides/marionetteAppStart.hbs":156,"../../../partials/slides/marionetteConfigInit.hbs":157,"../../../partials/slides/marionetteKeepThingsSmall.hbs":158,"../../../partials/slides/marionetteKeepThingsSmallTitle.hbs":159,"../../../partials/slides/marionetteModules1.hbs":160,"../../../partials/slides/marionetteModulesOldWay.hbs":161,"../../../partials/slides/marionetteModulesTitle.hbs":162,"../../../partials/slides/marionetteTemplates1.hbs":163,"../../../partials/slides/marionetteTemplates2.hbs":164,"../../../partials/slides/marionetteWorkingWithTemplates.hbs":165,"../../../partials/slides/moar.hbs":166,"../../../partials/slides/resources.hbs":167,"../../../partials/slides/soDry.hbs":168,"../../../partials/slides/soDry1.hbs":169,"../../../partials/slides/soDry2.hbs":170,"../../../partials/slides/whatIs.hbs":171,"../../../partials/slides/whatIsQuote.hbs":172,"../../../partials/slides/whyUse.hbs":173,"../../../partials/slides/whyUseBuildIntegration.hbs":174,"../../../partials/slides/whyUseCommonJS.hbs":175,"../../../partials/slides/whyUseNpmModules.hbs":176}],8:[function(require,module,exports){
 'use strict';
 
 var Marionette = require('../shims/marionette'),
@@ -11286,7 +11296,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.js */\n\ngrunt.registerTask('compile-templates', function() {\n    var js = '';\n    grunt.file.recurse('partials/slides/',\n            function(abspath, rootdir, subdir, filename) {\n\n        var file = filename.replace('.hbs', '');\n        js += 'module.exports.' +\n                file +\n                ' = require(\\'../../../partials/slides/' +\n                file +\n                '.hbs\\');' +\n                '\\n';\n    });\n    grunt.file.write('js/config/templates/index.js', js);\n});\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\n/* Gruntfile.js */\n\ngrunt.registerTask('compile-templates', function() {\n    var js = '';\n    grunt.file.recurse('partials/slides/',\n            function(abspath, rootdir, subdir, file) {\n\n        var filename = file.replace('.hbs', '');\n        js += 'module.exports.' +\n                filename +\n                ' = require(\\'../../../partials/slides/' +\n                filename +\n                '.hbs\\');' +\n                '\\n';\n    });\n    grunt.file.write('js/config/templates/index.js', js);\n});\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],164:[function(require,module,exports){
@@ -11307,38 +11317,73 @@ module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h1>What Is Browserify?</h1>";
+  return "<h1>MOAR!!</h1>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],167:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<blockquote cite=\"http://browserify.org/\">\n    <p>Browserify lets you <span class=\"quote-highlight\">require</span>(<span class=\"quote-highlight-string\">'modules'</span>) in the browser by bundling up all of your dependencies.</p>\n</blockquote>";
+  return "<h1>Resources</h1>\n<ul class=\"steps\">\n    <li>\n        How Browserify Works:<br>\n        <a href=\"http://benclinkinbeard.com/posts/how-browserify-works\">\n            benclinkinbeard.com/posts/how-browserify-works\n        </a>\n    </li>\n    <li>\n        Browserify Articles:<br>\n        <a href=\"http://browserify.org/articles\">\n            browserify.org/articles\n        </a>\n    </li>\n    <li>\n        Marionetteify:<br>\n        <a href=\"https://github.com/JSteunou/marionetteify\">\n            github.com/JSteunou/marionetteify\n        </a>\n    </li>\n    <li>\n        NPM Enterprise:<br>\n        <a href=\"https://www.npmjs.com/enterprise\">\n            www.npmjs.com/enterprise\n        </a>\n    </li>\n</ul>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],168:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h1>So why use Browserify?</h1>";
+  return "<h1>Getting Really DRY</h1>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],169:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h1>Easy Build Integration</h1>\n<img src=\"img/gulp-grunt.png\" alt=\"\">";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nnpm install behave-ui-hotkeys --save\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],170:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<h1>CommonJS Style Modules</h1>\n<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nvar Marionette = require('./shims/marionette'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '[data-app=\"presentation\"]'\n    }\n});\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
+  return "<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nnpm install @kkemple/some-behavior --save\n        </code>\n    </pre>\n</div>";
   },"useData":true});
 
 },{"hbsfy/runtime":27}],171:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<h1>What Is Browserify?</h1>";
+  },"useData":true});
+
+},{"hbsfy/runtime":27}],172:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<blockquote cite=\"http://browserify.org/\">\n    <p>Browserify lets you <span class=\"quote-highlight\">require</span>(<span class=\"quote-highlight-string\">'modules'</span>) in the browser by bundling up all of your dependencies.</p>\n</blockquote>";
+  },"useData":true});
+
+},{"hbsfy/runtime":27}],173:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<h1>So why use Browserify?</h1>";
+  },"useData":true});
+
+},{"hbsfy/runtime":27}],174:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<h1>Easy Build Integration</h1>\n<img src=\"img/gulp-grunt.png\" alt=\"\">";
+  },"useData":true});
+
+},{"hbsfy/runtime":27}],175:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var HandlebarsCompiler = require('hbsfy/runtime');
+module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<h1>CommonJS Style Modules</h1>\n<div class=\"code-snippet\">\n    <pre>\n        <code class=\"hljs javascript\">\nvar Marionette = require('./shims/marionette'),\n    app;\n\napp = new Marionette.Application({\n    regions: {\n        mainRegion: '[data-app=\"presentation\"]'\n    }\n});\n\nmodule.exports = app;\n        </code>\n    </pre>\n</div>";
+  },"useData":true});
+
+},{"hbsfy/runtime":27}],176:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
 module.exports = HandlebarsCompiler.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
